@@ -43,5 +43,21 @@ def FormatOffsets(offsets_dict):
         print(f"Unexpected error formatting offsets: {e}")
         return None
 
-# Fetch offsets from the JSON file and store them in variables
+# Function to fetch offsets from the JSON file and store them in variables
 offsets = FormatOffsets(FetchOffsets())
+
+# Function to get a specific offset by category and key
+def GetOffset(category, key):
+    """
+    Get a specific offset by category and key.
+
+    :param category: The category of the offset (e.g., "Attributes").
+    :param key: The key of the offset (e.g., "Driving Layup").
+    """
+    category = offsets.get(category, None)
+    if category:
+        for offset in category:
+            if offset["name"] == key:
+                return offset
+    # If the category is a dictionary (like "Base"), handle it differently
+    return None

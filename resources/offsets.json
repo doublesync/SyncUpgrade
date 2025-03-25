@@ -1712,5 +1712,223 @@
             "startBit": 0,
             "length": 2
         }
+    ],
+    "Accessories": [
+        {
+            "name": "Headband",
+            "offset": "0x1B6",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Headband Logo",
+            "offset": "0x377",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Headband Frequency",
+            "offset": "0x344",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Left Arm",
+            "offset": "0x180",
+            "startBit": 6,
+            "length": 5
+        },
+        {
+            "name": "Left Arm Frequency",
+            "offset": "0x346",
+            "startBit": 5,
+            "length": 3
+        },
+        {
+            "name": "Left Arm Home Color",
+            "offset": "0x181",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Left Arm Away Color",
+            "offset": "0x181",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Left Elbow",
+            "offset": "0x183",
+            "startBit": 4,
+            "length": 3
+        },
+        {
+            "name": "Left Elbow Frequency",
+            "offset": "0x345",
+            "startBit": 7,
+            "length": 3
+        },
+        {
+            "name": "Left Elbow Home Color",
+            "offset": "0x184",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Left Elbow Away Color",
+            "offset": "0x184",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Left Wrist",
+            "offset": "0x185",
+            "startBit": 5,
+            "length": 4
+        },
+        {
+            "name": "Left Wrist Frequency",
+            "offset": "0x345",
+            "startBit": 1,
+            "length": 3
+        },
+        {
+            "name": "Left Wrist Home Color",
+            "offset": "0x186",
+            "startBit": 1,
+            "length": 5
+        },
+        {
+            "name": "Left Wrist Away Color",
+            "offset": "0x186",
+            "startBit": 6,
+            "length": 5
+        },
+        {
+            "name": "Left Fingers",
+            "offset": "0x34A",
+            "startBit": 7,
+            "length": 4
+        },
+        {
+            "name": "Left Fingers Frequency",
+            "offset": "0x34A",
+            "startBit": 4,
+            "length": 3
+        },
+        {
+            "name": "Left Fingers Home Color",
+            "offset": "0x18C",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Left Fingers Away Color",
+            "offset": "0x18C",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Right Arm",
+            "offset": "0x182",
+            "startBit": 1,
+            "length": 5
+        },
+        {
+            "name": "Right Arm Frequency",
+            "offset": "0x347",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Right Arm Home Color",
+            "offset": "0x182",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Right Arm Away Color",
+            "offset": "0x183",
+            "startBit": 1,
+            "length": 3
+        },
+        {
+            "name": "Right Elbow",
+            "offset": "0x184",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Right Elbow Frequency",
+            "offset": "0x346",
+            "startBit": 2,
+            "length": 3
+        },
+        {
+            "name": "Right Elbow Home Color",
+            "offset": "0x185",
+            "startBit": 2,
+            "length": 3
+        },
+        {
+            "name": "Right Elbow Away Color",
+            "offset": "0x188",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Right Wrist",
+            "offset": "0x276",
+            "startBit": 0,
+            "length": 4
+        },
+        {
+            "name": "Right Wrist Frequency",
+            "offset": "0x345",
+            "startBit": 4,
+            "length": 3
+        },
+        {
+            "name": "Right Wrist Home Color",
+            "offset": "0x187",
+            "startBit": 3,
+            "length": 5
+        },
+        {
+            "name": "Right Wrist Away Color",
+            "offset": "0x188",
+            "startBit": 3,
+            "length": 5
+        },
+        {
+            "name": "Right Fingers",
+            "offset": "0x34D",
+            "startBit": 5,
+            "length": 4
+        },
+        {
+            "name": "Right Fingers Frequency",
+            "offset": "0x34D",
+            "startBit": 2,
+            "length": 3
+        },
+        {
+            "name": "Right Fingers Home Color",
+            "offset": "0x18C",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Right Fingers Away Color",
+            "offset": "0x18D",
+            "startBit": 1,
+            "length": 3
+        },
+        {
+            "name": "Arm Frequency Paired",
+            "offset": "0x1E7",
+            "startBit": 7,
+            "length": 1
+        }
     ]
 }

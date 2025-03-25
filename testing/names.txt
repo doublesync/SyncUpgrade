@@ -1,16 +1,10 @@
 0:None
-1:Isolation
-2:Isolation Point
-3:Isolation Wing
-4:P&R Ball Handler
-5:P&R Point
-6:P&R Wing
-7:P&R Roll Man
-8:Post Up Low
-9:Post Up High
-10:Guard Post Up
-11:Cutter
-12:Handoff Receiver
-13:Handoff Passer
-14:Mid Range
-15:3 PT
+1:Index Finger
+2:Middle Finger
+3:Ring Finger
+4:Pinky Finger
+5:Hand Wrap
+6:Index And Middle Fingers
+7:Middle And Ring Fingers
+8:Ring And Pinky Fingers
+9:Index And Ring Fingers

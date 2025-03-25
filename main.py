@@ -1,9 +1,10 @@
 import pymem
 import pymem.process
 
-from core import offsets
-from core import Game
-from memory import BuildPlayer
+from rich import print as rprint
+
+from core import offsets, GetOffset, Game, ConvertToGameValue
+from memory import BuildPlayer, WriteBinaryBytes
 from actions import BuildPlayerList, ReplacePlayer, TradePlayer
 
 PLAYER_LIST_SIZE = 1000
@@ -27,10 +28,19 @@ def main():
             search = input("\nEnter a player name to search for: ")
             player, duplicates = list_builder.find_player_by_name(search)
             if player:
-                with open(f"{player}.json", "w") as f:
-                    f.write(player.to_json())
+                # Print the player details and any duplicates found
+                # with open(f"{player}.json", "w") as f:
+                #     f.write(player.to_json())
+                # Write new number to driving layup address
+                import time
+                offset_data = GetOffset("Attributes", "Driving Layup")
+                for i in range(25, 111):
+                    game_value = ConvertToGameValue(i, offset_data["length"])
+                    WriteBinaryBytes(game, player.address + offset_data["offset"], offset_data["length"], game_value)
+                    time.sleep(0.2)
+                    rprint(f"Success! [green]Successfully wrote {i} to {player}'s driving layup.[/green]")
             else:
-                print("\nThere was no player found with that name.")
+                print("\nThere was no player found with that name.")            
 
             # ########################################################### #
             # FINDING DUPLICATES BASED ON A USER SEARCH FOR A PLAYER NAME #
@@ -41,8 +51,7 @@ def main():
             #     search = input("\nEnter a player name to search for: ")
             #     player, duplicates = list_builder.find_player_by_name(search)
             #     # Print the player details and any duplicates found
-            #     if player:
-            #         if duplicates:
+            #     if player and duplicates:
             #             print(f"\nFound {len(duplicates)} instance(s) of {search.upper()}:\n")
             #             for team, address in duplicates.items():
             #                 print(f"- ({team}) {address}")

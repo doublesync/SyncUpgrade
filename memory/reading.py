@@ -4,8 +4,8 @@ from core import (
     HasValidCharacters, 
     ConvertTeamType, 
     GetStringFromCode,
-    ConvertToGameValue,
-    ConvertToReadableValue
+    ConvertToReadableValue,
+    BitLengthToByteLength
 )
 
 # Read the integer value from memory and format it if needed
@@ -28,7 +28,7 @@ def ReadInteger(game, address, length, return_readable=False, start_bit=0):
         because the 8 bits start in the middle of the byte and span two bytes.
     """
     # Calculate the number of bytes needed to store the value
-    num_bytes = max((start_bit + length + 7) // 8, 1)
+    num_bytes = BitLengthToByteLength(length, start_bit)
     raw_bytes = game.memory.read_bytes(address, num_bytes)
     integer_value = int.from_bytes(raw_bytes, byteorder='little')
 
@@ -131,7 +131,8 @@ def BuildPlayer(game, player_id):
         "Tendencies": offsets["Tendencies"],
         "Hotzones": offsets["Hotzones"],
         "Signatures": offsets["Signatures"],
-        "Gear": offsets["Gear"]
+        "Gear": offsets["Gear"],
+        "Accessories": offsets["Accessories"]
     }
     player_skills = {
         "Vitals": player_vitals,
@@ -140,7 +141,8 @@ def BuildPlayer(game, player_id):
         "Tendencies": {},
         "Hotzones": {},
         "Signatures": {},
-        "Gear": {}
+        "Gear": {},
+        "Accessories": {}
     }
 
     # Iterate over each skill category and read the data
@@ -170,7 +172,8 @@ def BuildPlayer(game, player_id):
         tendencies=player_skills["Tendencies"],
         hotzones=player_skills["Hotzones"],
         signatures=player_skills["Signatures"],
-        gear=player_skills["Gear"]
+        gear=player_skills["Gear"],
+        accessories=player_skills["Accessories"]
     )
 
     # Return the Player object
