@@ -1,6 +1,8 @@
 {
     "Base": {
-        "Player Base Address": "0x07E599E8",
+        "Team Base Address": "0x0",
+        "Team Offset Length": "0x1620",
+        "Player Base Address": "0x081F8798",
         "Player Offset Length": "0x448",
         "Offset First Name": "0x28",
         "Offset Last Name": "0x0",
@@ -1615,6 +1617,12 @@
             "length": 3
         },
         {
+            "name": "Shorts Frequency",
+            "offset": "0x344",
+            "startBit": 6,
+            "length": 3
+        },
+        {
             "name": "Shorts Home Color",
             "offset": "0x180",
             "startBit": 0,
@@ -1928,6 +1936,162 @@
             "name": "Arm Frequency Paired",
             "offset": "0x1E7",
             "startBit": 7,
+            "length": 1
+        },
+        {
+            "name": "Left Leg",
+            "offset": "0x18D",
+            "startBit": 4,
+            "length": 4
+        },
+        {
+            "name": "Left Leg Frequency",
+            "offset": "0x347",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Left Leg Home Color",
+            "offset": "0x18E",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Left Leg Away Color",
+            "offset": "0x18E",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Left Knee",
+            "offset": "0x2F8",
+            "startBit": 7,
+            "length": 4
+        },
+        {
+            "name": "Left Knee Frequency",
+            "offset": "0x162",
+            "startBit": 2,
+            "length": 3
+        },
+        {
+            "name": "Left Knee Home Color",
+            "offset": "0x190",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Left Knee Away Color",
+            "offset": "0x190",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Left Ankle",
+            "offset": "0x191",
+            "startBit": 4,
+            "length": 3
+        },
+        {
+            "name": "Left Ankle Frequency",
+            "offset": "0x349",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Left Ankle Home Color",
+            "offset": "0x191",
+            "startBit": 7,
+            "length": 3
+        },
+        {
+            "name": "Left Ankle Away Color",
+            "offset": "0x192",
+            "startBit": 2,
+            "length": 3
+        },
+        {
+            "name": "Right Leg",
+            "offset": "0x18E",
+            "startBit": 6,
+            "length": 4
+        },
+        {
+            "name": "Right Leg Frequency",
+            "offset": "0x349",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Right Leg Home Color",
+            "offset": "0x18F",
+            "startBit": 2,
+            "length": 3
+        },
+        {
+            "name": "Right Leg Away Color",
+            "offset": "0x18F",
+            "startBit": 5,
+            "length": 3
+        },
+        {
+            "name": "Right Knee",
+            "offset": "0x1C8",
+            "startBit": 0,
+            "length": 4
+        },
+        {
+            "name": "Right Knee Frequency",
+            "offset": "0x349",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Right Knee Home Color",
+            "offset": "0x190",
+            "startBit": 6,
+            "length": 3
+        },
+        {
+            "name": "Right Knee Away Color",
+            "offset": "0x191",
+            "startBit": 1,
+            "length": 3
+        },
+        {
+            "name": "Right Ankle",
+            "offset": "0x192",
+            "startBit": 5,
+            "length": 3
+        },
+        {
+            "name": "Right Ankle Frequency",
+            "offset": "0x34A",
+            "startBit": 1,
+            "length": 3
+        },
+        {
+            "name": "Right Ankle Home Color",
+            "offset": "0x193",
+            "startBit": 0,
+            "length": 3
+        },
+        {
+            "name": "Right Ankle Away Color",
+            "offset": "0x193",
+            "startBit": 3,
+            "length": 3
+        },
+        {
+            "name": "Leg Frequency Paired",
+            "offset": "0x1BA",
+            "startBit": 2,
+            "length": 1
+        },
+        {
+            "name": "Knee Frequency Paired",
+            "offset": "0x1BA",
+            "startBit": 2,
             "length": 1
         }
     ]

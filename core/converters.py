@@ -82,11 +82,46 @@ shared_lists = {
     "Fingers": {
         0: 'None', 1: 'Index Finger', 2: 'Middle Finger', 3: 'Ring Finger', 4: 'Pinky Finger', 5: 'Hand Wrap', 6: 'Index And Middle Fingers', 7: 'Middle And Ring Fingers', 8: 'Ring And Pinky Fingers', 9: 'Index And Ring Fingers'
     },
+    "Legs": {
+        0: 'None', 1: 'Leg Sleeve', 2: 'Calf Sleeve', 3: 'Padded Calf Sleeve', 4: 'Half Calf Sleeve', 5: 'Jordan Calf Sleeve', 6: 'Tape', 7: 'Strap', 8: 'Calf Band', 9: 'Calf Sleeve Pad Retro'
+    },
+    "Knees": {
+        0: 'None', 1: 'Pad', 2: 'Hex Pad', 3: 'Brace', 4: 'Sleeve', 5: 'Strap', 6: 'Short Sleeve', 7: 'Tape', 8: 'Angular Pad', 9: 'Knee Pad Retro'
+    },
+    "Ankles": {
+        0: 'None', 1: 'Ankle Brace', 2: 'Ankle Tape', 3: 'Curry Ankle Brace'
+    },
     "YesNo": {
         0: 'No', 1: 'Yes'
     }
 }
 conversion_list = {
+    "Left Leg": shared_lists["Legs"],
+    "Left Leg Frequency": shared_lists["Frequencies"],
+    "Left Leg Home Color": shared_lists["ItemColors"],
+    "Left Leg Away Color": shared_lists["ItemColors"],
+    "Left Knee": shared_lists["Knees"],
+    "Left Knee Frequency": shared_lists["Frequencies"],
+    "Left Knee Home Color": shared_lists["ItemColors"],
+    "Left Knee Away Color": shared_lists["ItemColors"],
+    "Left Ankle": shared_lists["Ankles"],
+    "Left Ankle Frequency": shared_lists["Frequencies"],
+    "Left Ankle Home Color": shared_lists["ItemColors"],
+    "Left Ankle Away Color": shared_lists["ItemColors"],
+    "Right Leg": shared_lists["Legs"],
+    "Right Leg Frequency": shared_lists["Frequencies"],
+    "Right Leg Home Color": shared_lists["ItemColors"],
+    "Right Leg Away Color": shared_lists["ItemColors"],
+    "Right Knee": shared_lists["Knees"],
+    "Right Knee Frequency": shared_lists["Frequencies"],
+    "Right Knee Home Color": shared_lists["ItemColors"],
+    "Right Knee Away Color": shared_lists["ItemColors"],
+    "Right Ankle": shared_lists["Ankles"],
+    "Right Ankle Frequency": shared_lists["Frequencies"],
+    "Right Ankle Home Color": shared_lists["ItemColors"],
+    "Right Ankle Away Color": shared_lists["ItemColors"],
+    "Leg Frequency Paired": shared_lists["YesNo"],
+    "Knee Frequency Paired": shared_lists["YesNo"],
     "Headband": {
         0: 'None', 1: 'Headband', 2: 'Tie', 3: 'Headband 2', 4: 'Yes'
     },
@@ -163,6 +198,7 @@ conversion_list = {
     "Shorts Preferred Type": {
         0: 'None', 1: 'Short', 2: 'Long', 3: 'Folded'
     },
+    "Shorts Frequency": shared_lists["Frequencies"],
     "Shorts Home Color": shared_lists["Short Colors"],
     "Shorts Away Color": shared_lists["Short Colors"],
     "Jumpshot Base": shared_lists["Jumpshots"],
@@ -286,7 +322,7 @@ def ConvertTeamType(team_type_int):
     """
     return convert_team_type.get(team_type_int, "Unknown")
 
-# Function to convert signature integer code to string representation
+# Function to convert integer code to string representation
 def GetStringFromCode(category, signature_int):
     """
     Convert a signature integer code to its string representation based on the category.
@@ -298,3 +334,18 @@ def GetStringFromCode(category, signature_int):
     category = conversion_list.get(category, {})
     signature_string = category.get(signature_int, None)
     return signature_string
+
+# Function to convert string representation to integer code
+def GetCodeFromString(category, signature_string):
+    """
+    Convert a signature string representation to its integer code based on the category.
+
+    :param category: The category of the signature (e.g., "Dunk Package", "Layup Package").
+    :param signature_string: The string representation of the signature.
+    :return: The integer code representing the signature.
+    """
+    category = conversion_list.get(category, {})
+    for key, value in category.items():
+        if value == signature_string:
+            return key
+    return None

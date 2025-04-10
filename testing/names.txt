@@ -1,10 +1,4 @@
 0:None
-1:Index Finger
-2:Middle Finger
-3:Ring Finger
-4:Pinky Finger
-5:Hand Wrap
-6:Index And Middle Fingers
-7:Middle And Ring Fingers
-8:Ring And Pinky Fingers
-9:Index And Ring Fingers
+1:Ankle Brace
+2:Ankle Tape
+3:Curry Ankle Brace
