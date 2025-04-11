@@ -171,7 +171,7 @@ def prompt_player_duplicates(duplicates):
             'type': 'checkbox',
             'name': 'selected_duplicates',
             'message': 'Select which duplicate(s) to use:',
-            'choices': [{'name': str(player)} for player in duplicates]
+            'choices': [{'name': player, 'value': duplicates[player]} for player in duplicates]
         }
     ]
 

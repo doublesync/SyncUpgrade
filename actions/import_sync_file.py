@@ -3,8 +3,8 @@ from PyInquirer import prompt
 
 from memory import (
     WriteBinaryBytes, 
-    WriteInteger, 
-    ConvertToGameValue, 
+    WriteInteger,  
+    BuildPlayer,
     written_in_bytes, 
     written_in_integers
 )
@@ -12,7 +12,8 @@ from core import (
     offsets, 
     GetOffset, 
     conversion_list, 
-    GetCodeFromString
+    GetCodeFromString,
+    ConvertToGameValue
 )
 
 from actions import BuildPlayerList
@@ -50,17 +51,25 @@ class ImportSyncFile(object):
         # Iterate through the players in the JSON file
         for name, data in self.json_file.items():
             # Check if the player is in the player list
+            self.exporter.find_duplicates()
             first_occurrence, duplicates = self.exporter.find_player_by_name(name)
-            players_selected = []
+            selected_players = []
+            selected_player_objects = []
 
             # Prompt user to select which duplicate(s) to use
             if duplicates:
-                players_selected = prompt_player_duplicates(duplicates)
+                # Get the actual player objects from the selected players {key: team_name, value: player_address}
+                selected_players = prompt_player_duplicates(duplicates)
+                for player_address in selected_players:
+                    player_address = int(player_address, 16)  # Convert hex address to int
+                    player = BuildPlayer(self.game, None, player_address)
+                    if player:
+                        selected_player_objects.append(player)
             else:
-                players_selected = [first_occurrence]
+                selected_player_objects = [first_occurrence]
             
             # Iterate through the selected players
-            for player in players_selected:
+            for player in selected_player_objects:
                 # Check if the player is found in the player list
                 if not player:
                     players_not_found.append(name)

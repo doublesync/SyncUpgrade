@@ -1,10 +1,8 @@
 import os
-import logging
 import pymem
 from rich import print
 from rich.panel import Panel
 from rich.console import Console
-from rich.prompt import Prompt
 
 from core import Game
 from ui import run_cli
@@ -56,6 +54,8 @@ def start_sync2k():
         print("\n[cyan]Sync2K terminated by user.[/cyan]\n")
     except Exception as e:
         print(f"\n[red]An unexpected error occurred:[/red] {e}\n")
+    finally:
+        input("\nPress Enter to exit...\n")
 
 if __name__ == "__main__":
     start_sync2k()

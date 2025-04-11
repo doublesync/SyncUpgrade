@@ -118,7 +118,7 @@ class BuildPlayerList(object):
 
             for player in self.player_list:
                 player_name = f"{player.vitals['First Name']} {player.vitals['Last Name']}"
-                player_team_key = player.team["Key"]
+                player_team_key = player.team.get('Key', 'Unknown')
                 player_address = hex(player.address).upper()
 
                 if player_name in seen:

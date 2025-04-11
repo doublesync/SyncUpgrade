@@ -10,8 +10,6 @@ from core import (
     GetStringFromCode,
     ConvertToReadableValue,
     BitLengthToByteLength,
-    TeamDataException,
-    ValidCharacterException
 )
 
 # Read UTF-16 strings from memory
@@ -117,13 +115,14 @@ def GetTeamData(game, team_address):
     return team_data
 
 # Get player data from memory and create a Player object
-def BuildPlayer(game, player_id):
+def BuildPlayer(game, player_id, explicit_player_address=None):
     """
     Builds player data from memory and creates a Player object."
     
     :param game: The game memory reader instance.
     :param player_base_address: The base address of the player data.
     :param player_id: The ID of the player to retrieve data for.
+    :param explicit_player_address: Optional explicit address for the player data.
     :return: A Player object containing the player's data.
     """ 
     try:
@@ -133,7 +132,10 @@ def BuildPlayer(game, player_id):
         player_base_address = int.from_bytes(player_base_address, byteorder='little')
 
         # Calculate the specific player address
-        player_address = player_base_address + offsets["Base"]["Player Offset Length"] * player_id
+        if explicit_player_address:
+            player_address = explicit_player_address
+        else:
+            player_address = player_base_address + offsets["Base"]["Player Offset Length"] * player_id
 
         # Read player team data (address points to team address, where we can then get team details)
         team_address = GetTeamAddress(game, player_address)
