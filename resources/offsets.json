@@ -3,6 +3,7 @@
         "Team Base Address": "0x0",
         "Team Offset Length": "0x1620",
         "Player Base Address": "0x081F8798",
+        "Player Offset Chain": [[96, true], [-3288, false]],
         "Player Offset Length": "0x448",
         "Offset First Name": "0x28",
         "Offset Last Name": "0x0",

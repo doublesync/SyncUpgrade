@@ -3,8 +3,14 @@ import threading
 import pymem
 
 from nicegui import ui
-from core import Game, offsets, conversion_list, GetCodeFromString, ConvertToGameValue
-from memory import BuildPlayer, WriteBinaryBytes, WriteInteger
+from dribble import (
+    Game,
+    offsets,
+    conversion_list,
+    GetCodeFromString,
+    ConvertToGameValue,
+)
+from dribble.memory import BuildPlayer, WriteBinaryBytes, WriteInteger
 
 # -------- GUI SETUP --------
 
@@ -28,34 +34,36 @@ accessory_inputs = {}
 
 # -------- UI LAYOUT --------
 
-with ui.header().classes(replace='row items-center') as header:
+with ui.header().classes(replace="row items-center") as header:
     # ui.button(on_click=lambda: left_drawer.toggle(), icon='menu').props('flat color=white')
     with ui.tabs() as tabs:
-        ui.tab('Vitals')
-        ui.tab('Attributes')
-        ui.tab('Badges')
-        ui.tab('Tendencies')
-        ui.tab('Hotzones')
-        ui.tab('Signature')
-        ui.tab('Gear')
-        ui.tab('Accessories')
+        ui.tab("Vitals")
+        ui.tab("Attributes")
+        ui.tab("Badges")
+        ui.tab("Tendencies")
+        ui.tab("Hotzones")
+        ui.tab("Signature")
+        ui.tab("Gear")
+        ui.tab("Accessories")
 
 with ui.footer(value=False) as footer:
-    ui.button('Discord', on_click=lambda: ui.open('https://discord.gg/JV3H5xty34')).props('flat color=white')
+    ui.button(
+        "Discord", on_click=lambda: ui.open("https://discord.gg/JV3H5xty34")
+    ).props("flat color=white")
 
-with ui.left_drawer().classes('bg-blue-100 p-4') as left_drawer:
-    ui.label('Potion Tasks').classes('text-lg font-bold mb-2')
-    ui.button('Load Player', on_click=lambda: UpdateHoverPlayer())
+with ui.left_drawer().classes("bg-blue-100 p-4") as left_drawer:
+    ui.label("Potion Tasks").classes("text-lg font-bold mb-2")
+    ui.button("Load Player", on_click=lambda: UpdateHoverPlayer())
 
-with ui.page_sticky(position='bottom-right', x_offset=20, y_offset=20):
-    ui.button(on_click=footer.toggle, icon='contact_support').props('fab')
+with ui.page_sticky(position="bottom-right", x_offset=20, y_offset=20):
+    ui.button(on_click=footer.toggle, icon="contact_support").props("fab")
 
-with ui.tab_panels(tabs, value='Vitals').classes('w-full'):
-    with ui.tab_panel('Vitals'):
-        label_vitals = ui.label('No player selected').classes('text-2xl')
+with ui.tab_panels(tabs, value="Vitals").classes("w-full"):
+    with ui.tab_panel("Vitals"):
+        label_vitals = ui.label("No player selected").classes("text-2xl")
 
         # Create a container for the grid layout that spans full width
-        with ui.grid(columns=4).classes('gap-4 w-full'):  # Add 'w-full' here
+        with ui.grid(columns=4).classes("gap-4 w-full"):  # Add 'w-full' here
             for vital in offsets["Vitals"]:
                 vital_name = vital["name"]
                 vital_options = conversion_list.get(vital_name, {})
@@ -65,68 +73,68 @@ with ui.tab_panels(tabs, value='Vitals').classes('w-full'):
                         label=vital_name,
                         options=list(vital_options.values()),
                         with_input=True,
-                    ).classes('w-full')
+                    ).classes("w-full")
                 else:
                     input_element = ui.input(
                         label=vital_name,
-                        type='number',
+                        type="number",
                         min=0,
-                    ).classes('w-full')
+                    ).classes("w-full")
                 # Add the select element to the global dictionary
                 vital_inputs[vital_name] = select_element
 
-    with ui.tab_panel('Attributes'):
-        label_attributes = ui.label('No player selected').classes('text-2xl')
+    with ui.tab_panel("Attributes"):
+        label_attributes = ui.label("No player selected").classes("text-2xl")
 
         # Controls to adjust all attributes
-        with ui.row().classes('my-4'):
-            ui.button('Set All to 99', on_click=lambda: SetAllAttributes(99))
-            ui.button('+5 All', on_click=lambda: AdjustAllAttributes(5))
-            ui.button('-5 All', on_click=lambda: AdjustAllAttributes(-5))
+        with ui.row().classes("my-4"):
+            ui.button("Set All to 99", on_click=lambda: SetAllAttributes(99))
+            ui.button("+5 All", on_click=lambda: AdjustAllAttributes(5))
+            ui.button("-5 All", on_click=lambda: AdjustAllAttributes(-5))
 
         # Attribute input grid
-        with ui.grid(columns=4).classes('gap-4 w-full'):
+        with ui.grid(columns=4).classes("gap-4 w-full"):
             for attribute in offsets["Attributes"]:
                 attribute_name = attribute["name"]
                 select_element = ui.select(
                     label=attribute_name,
                     options=[i for i in range(25, 111)],
-                    with_input=True
-                ).classes('w-full')
+                    with_input=True,
+                ).classes("w-full")
                 attribute_inputs[attribute_name] = select_element
 
-    with ui.tab_panel('Badges'):
-        label_badges = ui.label('No player selected').classes('text-2xl')
+    with ui.tab_panel("Badges"):
+        label_badges = ui.label("No player selected").classes("text-2xl")
 
         # Badge input grid
-        with ui.grid(columns=4).classes('gap-4 w-full'):
+        with ui.grid(columns=4).classes("gap-4 w-full"):
             for badge in offsets["Badges"]:
                 badge_name = badge["name"]
                 select_element = ui.select(
                     label=badge_name,
-                    options=[i for i in range (0, 6)],
-                ).classes('w-full')
+                    options=[i for i in range(0, 6)],
+                ).classes("w-full")
                 badge_inputs[badge_name] = select_element
 
-    with ui.tab_panel('Tendencies'):
-        label_tendencies = ui.label('No player selected').classes('text-2xl')
+    with ui.tab_panel("Tendencies"):
+        label_tendencies = ui.label("No player selected").classes("text-2xl")
 
         # Tendency input grid
-        with ui.grid(columns=4).classes('gap-4 w-full'):
+        with ui.grid(columns=4).classes("gap-4 w-full"):
             for tendency in offsets["Tendencies"]:
                 tendency_name = tendency["name"]
                 select_element = ui.select(
                     label=tendency_name,
                     options=[i for i in range(0, 101)],
-                    with_input=True
-                ).classes('w-full')
+                    with_input=True,
+                ).classes("w-full")
                 tendency_inputs[tendency_name] = select_element
 
-    with ui.tab_panel('Hotzones'):
-        label_hotzones = ui.label('No player selected').classes('text-2xl')
+    with ui.tab_panel("Hotzones"):
+        label_hotzones = ui.label("No player selected").classes("text-2xl")
 
         # Create a container for the grid layout that spans full width
-        with ui.grid(columns=4).classes('gap-4 w-full'):  # Add 'w-full' here
+        with ui.grid(columns=4).classes("gap-4 w-full"):  # Add 'w-full' here
             for hotzone in offsets["Hotzones"]:
                 hotzone_name = hotzone["name"]
                 hotzone_options = conversion_list.get(hotzone_name, {})
@@ -135,16 +143,16 @@ with ui.tab_panels(tabs, value='Vitals').classes('w-full'):
                     select_element = ui.select(
                         label=hotzone_name,
                         options=list(hotzone_options.values()),
-                        with_input=True
-                    ).classes('w-full')
+                        with_input=True,
+                    ).classes("w-full")
                 # Add the select element to the global dictionary
                 hotzone_inputs[hotzone_name] = select_element
 
-    with ui.tab_panel('Signature'):
-        label_signature = ui.label('No player selected').classes('text-2xl')
-        
+    with ui.tab_panel("Signature"):
+        label_signature = ui.label("No player selected").classes("text-2xl")
+
         # Create a container for the grid layout that spans full width
-        with ui.grid(columns=4).classes('gap-4 w-full'):  # Add 'w-full' here
+        with ui.grid(columns=4).classes("gap-4 w-full"):  # Add 'w-full' here
             for signature in offsets["Signatures"]:
                 signature_name = signature["name"]
                 signature_options = conversion_list.get(signature_name, {})
@@ -153,21 +161,21 @@ with ui.tab_panels(tabs, value='Vitals').classes('w-full'):
                     select_element = ui.select(
                         label=signature_name,
                         options=list(signature_options.values()),
-                        with_input=True
-                    ).classes('w-full')
+                        with_input=True,
+                    ).classes("w-full")
                 else:
                     select_element = ui.select(
                         label=signature["name"],
                         options=[i for i in range(0, 101)],
-                    ).classes('w-full')
+                    ).classes("w-full")
                 # Add the select element to the global dictionary
                 signature_inputs[signature_name] = select_element
 
-    with ui.tab_panel('Gear'):
-        label_gear = ui.label('No player selected').classes('text-2xl')
-    
+    with ui.tab_panel("Gear"):
+        label_gear = ui.label("No player selected").classes("text-2xl")
+
         # Create a container for the grid layout that spans full width
-        with ui.grid(columns=4).classes('gap-4 w-full'):  # Add 'w-full' here
+        with ui.grid(columns=4).classes("gap-4 w-full"):  # Add 'w-full' here
             for gear in offsets["Gear"]:
                 gear_name = gear["name"]
                 gear_options = conversion_list.get(gear_name, {})
@@ -176,16 +184,16 @@ with ui.tab_panels(tabs, value='Vitals').classes('w-full'):
                     select_element = ui.select(
                         label=gear_name,
                         options=list(gear_options.values()),
-                        with_input=True
-                    ).classes('w-full')
+                        with_input=True,
+                    ).classes("w-full")
                 # Add the select element to the global dictionary
                 gear_inputs[gear_name] = select_element
 
-    with ui.tab_panel('Accessories'):
-        label_accessories = ui.label('No player selected').classes('text-2xl')
+    with ui.tab_panel("Accessories"):
+        label_accessories = ui.label("No player selected").classes("text-2xl")
 
         # Create a container for the grid layout that spans full width
-        with ui.grid(columns=4).classes('gap-4 w-full'):  # Add 'w-full' here
+        with ui.grid(columns=4).classes("gap-4 w-full"):  # Add 'w-full' here
             for accessory in offsets["Accessories"]:
                 accessory_name = accessory["name"]
                 accessory_options = conversion_list.get(accessory_name, {})
@@ -194,12 +202,13 @@ with ui.tab_panels(tabs, value='Vitals').classes('w-full'):
                     select_element = ui.select(
                         label=accessory_name,
                         options=list(accessory_options.values()),
-                        with_input=True
-                    ).classes('w-full')
+                        with_input=True,
+                    ).classes("w-full")
                 # Add the select element to the global dictionary
                 accessory_inputs[accessory_name] = select_element
 
 # -------- UI UPDATE FUNCTIONS --------
+
 
 def UpdatePlayerTabs(game, player):
     """Update UI components for each tab based on the given player object."""
@@ -245,7 +254,7 @@ def UpdatePlayerTabs(game, player):
             value = player.signatures.get(name, 0)
             input_field.value = value
             input_field.on_value_change(CreateValueHandler("Signatures", name))
-                
+
         # Update the Hotzones tab
         label_hotzones.set_text(f"{full_name}'s Hotzones")
         for name, input_field in hotzone_inputs.items():
@@ -271,6 +280,7 @@ def UpdatePlayerTabs(game, player):
         print(f"[UI Update Error] {e}")
     finally:
         is_updating_ui = False
+
 
 def OnItemChange(game, player, category, name, new_value):
     """Handle changes to UI items and update the player in memory."""
@@ -310,15 +320,18 @@ def OnItemChange(game, player, category, name, new_value):
         line_no = e.__traceback__.tb_lineno
         print(f"[Item Change Error] {e} @ line {line_no}")
 
+
 def SetAllAttributes(value: int):
     for select in attribute_inputs.values():
         select.value = value
+
 
 def AdjustAllAttributes(amount: int):
     for select in attribute_inputs.values():
         current = select.value or 25
         new_value = max(25, min(110, current + amount))
         select.value = new_value
+
 
 def SetLivePlayerLoading(value: bool):
     global live_player_loading
@@ -328,41 +341,52 @@ def SetLivePlayerLoading(value: bool):
     else:
         ui.notify("Live Player Loading Disabled")
 
+
 def UpdateHoverPlayer():
     global last_address
     if not game:
-        ui.notify('Game not loaded')
+        ui.notify("Game not loaded")
         return
     hover_player = GetHoverPlayer(game)
     if hover_player and hover_player.address != last_address:
         last_address = hover_player.address
         UpdatePlayerTabs(game, hover_player)
 
+
 def CreateValueHandler(category, name):
     global is_updating_ui
+
     def handler(e):
         if is_updating_ui:
             return
         if latest_player:
             OnItemChange(game, latest_player, category, name, e.value)
+
     return handler
 
+
 # -------- POTION LOGIC --------
+
 
 def GetHoverPlayer(game):
     try:
         base_cursor_address = 0x1E4CB3A8
         cursor_offset = 0x1480
 
-        cursor_base_address = game.memory.read_bytes(game.base_address + base_cursor_address, 8)
-        cursor_base_address = int.from_bytes(cursor_base_address, byteorder='little')
+        cursor_base_address = game.memory.read_bytes(
+            game.base_address + base_cursor_address, 8
+        )
+        cursor_base_address = int.from_bytes(cursor_base_address, byteorder="little")
 
-        hover_player_address = game.memory.read_bytes(cursor_base_address + cursor_offset, 8)
-        hover_player_address = int.from_bytes(hover_player_address, byteorder='little')
+        hover_player_address = game.memory.read_bytes(
+            cursor_base_address + cursor_offset, 8
+        )
+        hover_player_address = int.from_bytes(hover_player_address, byteorder="little")
 
         return BuildPlayer(game, None, hover_player_address)
     except:
         return None
+
 
 def SyncWorker():
     try:
@@ -388,8 +412,9 @@ def SyncWorker():
     except Exception as e:
         print(f"[red]Unexpected error:[/red] {e}")
 
+
 # -------- RUN NICEGUI & BACKGROUND THREAD --------
 
 if __name__ in {"__main__", "__mp_main__"}:
     threading.Thread(target=SyncWorker, daemon=True).start()
-    ui.run(favicon='🍷', title='Potion Editor')
+    ui.run(favicon="🍷", title="Potion Editor")

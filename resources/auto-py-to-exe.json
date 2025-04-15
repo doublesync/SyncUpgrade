@@ -1,0 +1,89 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/sync_main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": true
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/sync_icon.ico"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": true
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/configs;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/resources;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/chris/AppData/Local/Programs/Python/Python313/python313.dll;."
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "pymem"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "dribble"
+  },
+  {
+   "optionDest": "collect_all",
+   "value": "pymem"
+  },
+  {
+   "optionDest": "collect_all",
+   "value": "dribble"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

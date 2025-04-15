@@ -1,19 +1,20 @@
 import os
-import sys
 import json
 
-from core.offsets import offsets
 from actions import ImportSyncFile
 
 from rich import print
-from PyInquirer import prompt
 
 from ui.prompts import (
-    prompt_preset_usage, 
-    prompt_preset_creation, 
-    prompt_item_options, 
-    prompt_import_file
+    PromptPresetUsage,
+    PromptPresetCreation,
+    PromptItemOptions,
+    PromptImportFile,
+    PromptExportPlayerSelection,
+    PromptSpecificExportPlayers,
+    PromptPlayerVersions,
 )
+
 
 # A function to handle the user's choice(s) from the main menu
 def handle_choice(game, exporter, choice, **kwargs):
@@ -30,8 +31,8 @@ def handle_choice(game, exporter, choice, **kwargs):
             """
             Import player list data from a file.
             """
-            import_file = prompt_import_file()
-            if not import_file: 
+            import_file = PromptImportFile()
+            if not import_file:
                 input("\nPress Enter to continue...")
                 return
 
@@ -39,11 +40,11 @@ def handle_choice(game, exporter, choice, **kwargs):
 
             try:
                 # Load the import file
-                with open(import_file_path, 'r') as f:
+                with open(import_file_path, "r") as f:
                     import_data = json.load(f)
 
-                # Run the importer with the loaded data
-                exporter.run() # Run the exporter first to intialize the player list
+                # Run the exporter to initialize the player list, then run the importer with the loaded data
+                exporter.run()
                 importer = ImportSyncFile(game, exporter, import_data)
                 importer.run()
 
@@ -56,23 +57,60 @@ def handle_choice(game, exporter, choice, **kwargs):
             """
             # Prompt the user for export options
             export_selections = None
-            use_preset, preset_file = prompt_preset_usage()
+            use_preset, preset_file = PromptPresetUsage()
 
             # If the user wants to use a preset, load the preset file
             # If not, prompt the user to create new export options
             if not use_preset:
-                export_selections = prompt_item_options()
-                prompt_preset_creation(export_selections)
+                export_selections = PromptItemOptions()
+                PromptPresetCreation(export_selections)
             else:
                 try:
-                    export_selections = json.load(open(os.path.join("configs/presets", preset_file), 'r'))
+                    export_selections = json.load(
+                        open(os.path.join("configs/presets", preset_file), "r")
+                    )
                 except Exception as e:
-                    print(f"\n[red]Error loading preset file: {e}[/red]")
-                    input("\nPress Enter to continue...")
-                    return
+                    raise Exception("Error loading preset file from directory")
+
+            # Check if the user wants to use the keys of an existing import file to specify which players to export
+            specify_players_choice = PromptExportPlayerSelection()
+            if specify_players_choice:
+                import_file_path = PromptImportFile()
+                selected_player_names = PromptSpecificExportPlayers(import_file_path)
+                selected_player_addresses = []
+
+                # Run the exporter first to initialize the player list & find duplicates
+                exporter.run()
+                exporter.find_duplicates()
+
+                # Prompt the user to select which duplicates of each player to export
+                for player_name in selected_player_names:
+                    # Find the player and all of its duplicates by name
+                    player, duplicates = exporter.find_player_by_name(player_name)
+                    # If the player is found, prompt the user to select which versions of it to export
+                    if player:
+                        selected_versions = PromptPlayerVersions(duplicates)
+                        if "skip" in selected_versions:
+                            # TODO: Instead of using the prompt, add all of the player versions to the list
+                            break
+                        # Add the selected player and its duplicates to the list of selected players
+                        selected_player_addresses.extend(selected_versions)
+
+                # Convert selected_player_addresses from hexadecimal to integer
+                for i in range(len(selected_player_addresses)):
+                    try:
+                        selected_player_addresses[i] = int(
+                            selected_player_addresses[i], 16
+                        )
+                    except:
+                        continue
 
             # Run the player_list with the selected export options & print a success message
-            exporter.run(export=True, export_selections=export_selections)
+            exporter.run(
+                export=True,
+                export_selections=export_selections,
+                only_include_addresses=selected_player_addresses,
+            )
             print("\n[green]Successfully exported players...[/green]\n")
 
         case _:
