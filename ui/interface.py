@@ -1,6 +1,8 @@
 import sys
+
 from rich.console import Console
 from rich.prompt import Prompt
+
 from ui.handlers import handle_choice
 
 console = Console()

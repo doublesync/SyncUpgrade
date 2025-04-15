@@ -1,16 +1,9 @@
-from rich import print
-
-from dribble.memory import (
-    written_in_bytes,
-    written_in_integers,
-    BuildPlayer,
-    GetOffset,
-    WriteBinaryBytes,
-    WriteInteger,
-)
+from dribble.memory import (BuildPlayer, GetOffset, WriteBinaryBytes,
+                            WriteInteger, written_in_bytes,
+                            written_in_integers)
 from dribble.models import GetCodeFromString
 from dribble.utils import ConvertToGameValue
-from actions import BuildPlayerList
+from rich import print
 
 from ui.prompts import PromptPlayerVersions
 

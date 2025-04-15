@@ -1,16 +1,11 @@
-import time
 import threading
-import pymem
+import time
 
-from nicegui import ui
-from dribble import (
-    Game,
-    offsets,
-    conversion_list,
-    GetCodeFromString,
-    ConvertToGameValue,
-)
+import pymem
+from dribble import (ConvertToGameValue, Game, GetCodeFromString,
+                     conversion_list, offsets)
 from dribble.memory import BuildPlayer, WriteBinaryBytes, WriteInteger
+from nicegui import ui
 
 # -------- GUI SETUP --------
 

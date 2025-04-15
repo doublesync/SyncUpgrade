@@ -1,19 +1,13 @@
-import os
 import json
-
-from actions import ImportSyncFile
+import os
 
 from rich import print
 
-from ui.prompts import (
-    PromptPresetUsage,
-    PromptPresetCreation,
-    PromptItemOptions,
-    PromptImportFile,
-    PromptExportPlayerSelection,
-    PromptSpecificExportPlayers,
-    PromptPlayerVersions,
-)
+from actions import ImportSyncFile
+from ui.prompts import (PromptExportPlayerSelection, PromptImportFile,
+                        PromptItemOptions, PromptPlayerVersions,
+                        PromptPresetCreation, PromptPresetUsage,
+                        PromptSpecificExportPlayers)
 
 
 # A function to handle the user's choice(s) from the main menu
@@ -69,7 +63,7 @@ def handle_choice(game, exporter, choice, **kwargs):
                     export_selections = json.load(
                         open(os.path.join("configs/presets", preset_file), "r")
                     )
-                except Exception as e:
+                except Exception:
                     raise Exception("Error loading preset file from directory")
 
             # Check if the user wants to use the keys of an existing import file to specify which players to export
@@ -102,7 +96,7 @@ def handle_choice(game, exporter, choice, **kwargs):
                         selected_player_addresses[i] = int(
                             selected_player_addresses[i], 16
                         )
-                    except:
+                    except Exception:
                         continue
 
             # Run the player_list with the selected export options & print a success message

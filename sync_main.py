@@ -1,14 +1,15 @@
 import os
-import pymem
-from rich import print
-from rich.panel import Panel
-from rich.console import Console
 
-from dribble.models import Game
+import pymem
 from dribble.memory import GetOffsets
+from dribble.models import Game
+from rich import print
+from rich.console import Console
+from rich.panel import Panel
+
+from actions import BuildPlayerList
 from ui import run_cli
 from ui.prompts import PromptPlayerListSize
-from actions import BuildPlayerList
 
 # Setup rich console
 console = Console()
@@ -26,7 +27,10 @@ def StartProgram():
         # Title and donation panel
         header = Panel.fit(
             "[bold magenta]Sync2K - NBA2K Automation Tool[/bold magenta]\n"
-            "[green]Support development:[/green] [link=https://ko-fi.com/doublesync]https://ko-fi.com/doublesync[/link]",
+            """
+            [green]Support development:[/green] \n
+            [link=https://ko-fi.com/doublesync]Donate[/link]
+            """,
             title="Welcome",
             border_style="cyan",
         )
@@ -45,7 +49,7 @@ def StartProgram():
 
         # Check if the game module is valid
         if not game.module:
-            print("\n[red]Sync2K had a problem while attaching to NBA2K25.exe.[/red]\n")
+            print("\n[red]Could not attach to the process.[/red]\n")
             return
 
         # Game loop
@@ -54,17 +58,17 @@ def StartProgram():
 
     except pymem.exception.ProcessNotFound:
         print(
-            "\n[red]Sync2K cannot find the NBA2K25.exe process. Make sure the game is running.[/red]\n"
+            "\n[red]Could not find the process.[/red]\n"
         )
     except pymem.exception.MemoryReadError:
         print(
-            "\n[red]Sync2K cannot read memory. Make sure you have the necessary permissions.[/red]\n"
+            "\n[red]Could not read memory.[/red]\n"
         )
     except KeyboardInterrupt:
         print("\n[cyan]Sync2K terminated by user.[/cyan]\n")
     except Exception as e:
         print(
-            f"\n[red]An unexpected error occurred @ line {e.__traceback__.tb_lineno}:[/red] {e}\n"
+            f"\n[red]An unexpected error occurred: {e}[/red]\n"
         )
     finally:
         input("\nPress Enter to exit...\n")

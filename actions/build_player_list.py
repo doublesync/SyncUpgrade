@@ -1,7 +1,6 @@
 import json
 
 from dribble.memory import BuildPlayer
-
 from rich.console import Console
 from rich.progress import Progress
 
@@ -103,7 +102,7 @@ class BuildPlayerList(object):
             )
 
         # Dump player_dump to a JSON file if export is True
-        if export == True:
+        if export:
             # Check if the user wants to export specific selections
             if export_selections:
                 filtered_dump = {}

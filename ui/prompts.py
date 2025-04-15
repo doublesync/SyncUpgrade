@@ -1,10 +1,9 @@
-import os
 import json
-
-from rich import print
-from PyInquirer import prompt
+import os
 
 from dribble.memory import GetOffsets
+from PyInquirer import prompt
+from rich import print
 
 
 # A prompt that lets the user select a preset file

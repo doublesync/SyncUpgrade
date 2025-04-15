@@ -17,7 +17,7 @@ class ReplacePlayer(object):
         self.new_player = new_player
 
     def run(self):
-        if self.new_player == True:
+        if self.new_player:
             new_player_data = self.game.memory.read_bytes(
                 self.new_player.address, offsets["Base"]["Player Offset Length"]
             )
