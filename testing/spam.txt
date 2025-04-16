@@ -28,11 +28,11 @@
             # Build a list of players from the game memory
             # list_builder = BuildPlayerList(game, PLAYER_LIST_SIZE)
             # list_builder.run(export=False, singular=False)
-            # # duplicates = list_builder.find_duplicates()
+            # # versions = list_builder.find_versions()
             # search = input("\nEnter a player name to search for: ")
-            # player, duplicates = list_builder.find_player_by_name(search)
+            # player, versions = list_builder.find_player_by_name(search)
             # if player:
-            #     # Print the player details and any duplicates found
+            #     # Print the player details and any versions found
             #     # with open(f"{player}.json", "w") as f:
             #     #     f.write(player.to_json())
             #     # Write new number to driving layup address
@@ -47,26 +47,26 @@
             #     print("\nThere was no player found with that name.")            
 
             # ########################################################### #
-            # FINDING DUPLICATES BASED ON A USER SEARCH FOR A PLAYER NAME #
+            # FINDING versions BASED ON A USER SEARCH FOR A PLAYER NAME #
             # ########################################################### #
 
             # while True:
-            #     # Search for player, it's first instance, and all duplicates by name
+            #     # Search for player, it's first instance, and all versions by name
             #     search = input("\nEnter a player name to search for: ")
-            #     player, duplicates = list_builder.find_player_by_name(search)
-            #     # Print the player details and any duplicates found
-            #     if player and duplicates:
-            #             print(f"\nFound {len(duplicates)} instance(s) of {search.upper()}:\n")
-            #             for team, address in duplicates.items():
+            #     player, versions = list_builder.find_player_by_name(search)
+            #     # Print the player details and any versions found
+            #     if player and versions:
+            #             print(f"\nFound {len(versions)} instance(s) of {search.upper()}:\n")
+            #             for team, address in versions.items():
             #                 print(f"- ({team}) {address}")
             #         else:
-            #             print(f"\nThere were no duplicates found for this player.")
+            #             print(f"\nThere were no versions found for this player.")
             #     else:
             #         print("\nThere was no player found with that name.")
 
-            # with open("duplicates.json", "w") as f:
+            # with open("versions.json", "w") as f:
             #     import json
-            #     json.dump(duplicates, f, indent=4)
+            #     json.dump(versions, f, indent=4)
 
 
 
