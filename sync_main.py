@@ -7,9 +7,8 @@ from rich import print
 from rich.console import Console
 from rich.panel import Panel
 
-from actions import BuildPlayerList
-from ui import run_cli
-from ui.prompts import PromptPlayerListSize
+from actions.build_player_list import BuildPlayerList
+from ui import run_cli, PromptPlayerListSize
 
 # Setup rich console
 console = Console()
@@ -57,19 +56,13 @@ def StartProgram():
             run_cli(game, exporter)
 
     except pymem.exception.ProcessNotFound:
-        print(
-            "\n[red]Could not find the process.[/red]\n"
-        )
+        print("\n[red]Could not find the process.[/red]\n")
     except pymem.exception.MemoryReadError:
-        print(
-            "\n[red]Could not read memory.[/red]\n"
-        )
+        print("\n[red]Could not read memory.[/red]\n")
     except KeyboardInterrupt:
         print("\n[cyan]Sync2K terminated by user.[/cyan]\n")
     except Exception as e:
-        print(
-            f"\n[red]An unexpected error occurred: {e}[/red]\n"
-        )
+        print(f"\n[red]An unexpected error occurred: {e}[/red]\n")
     finally:
         input("\nPress Enter to exit...\n")
 

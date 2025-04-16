@@ -1,11 +1,14 @@
-from dribble.memory import (BuildPlayer, GetOffset, WriteBinaryBytes,
-                            WriteInteger, written_in_bytes,
-                            written_in_integers)
+from dribble.memory import (
+    BuildPlayer,
+    GetOffset,
+    WriteBinaryBytes,
+    WriteInteger,
+    written_in_bytes,
+    written_in_integers,
+)
 from dribble.models import GetCodeFromString
 from dribble.utils import ConvertToGameValue
 from rich import print
-
-from ui.prompts import PromptPlayerVersions
 
 
 # A class to handle the import of a sync file to game memory
@@ -33,39 +36,31 @@ class ImportSyncFile(object):
 
         :return: None
         """
+        # Locally import the PromptPlayerVersions function
+        from ui import PromptPlayerVersions
+
         # Initialize lists to store players found and not found
         logs = []
         players_not_found = []
-        prompt_duplicate_selections = True
 
         # Iterate through the players in the JSON file
         for name, data in self.json_file.items():
             # Check if the player is in the player list
-            self.exporter.find_duplicates()
-            first_occurrence, duplicates = self.exporter.find_player_by_name(name)
+            self.exporter.find_versions()
+            _, versions = self.exporter.find_player_by_name(name)
             selected_players = []
             selected_player_objects = []
 
-            # Prompt user to select which duplicate(s) to use
-            if prompt_duplicate_selections and duplicates:
+            # Prompt user to select which versions(s) to use
+            if versions:
                 # Get the actual player objects from the selected players {key: team_name, value: player_address}
-                selected_players = PromptPlayerVersions(duplicates)
-                # Check if the user chose to skip the player
-                if "skip" in selected_players:
-                    # TODO: Instead of using the prompt, add all of the player versions to the list
-                    prompt_duplicate_selections = False
-                    continue
+                selected_players = PromptPlayerVersions(versions)
                 # Iteraete through the selected players and add them to the selected_player_objects list
                 for player_address in selected_players:
-                    player_address = int(
-                        player_address, 16
-                    )  # Convert hex address to int
+                    player_address = int(player_address, 16)
                     player = BuildPlayer(self.game, None, player_address)
                     if player:
                         selected_player_objects.append(player)
-            else:
-                # If no duplicates, just add the first occurrence to the selected player objects
-                selected_player_objects.append(first_occurrence)
 
             # Iterate through the selected players
             for player in selected_player_objects:
@@ -152,6 +147,9 @@ class ImportSyncFile(object):
         # Write to the log file
         log_file_path = "configs/logs/import_log.txt"
         with open(log_file_path, "w") as log_file:
-            for log in logs:
-                log_file.write(log + "\n")
+            if len(logs) > 0:
+                for log in logs:
+                    log_file.write(log + "\n")
+            else:
+                log_file.write("No errors found.\n")
         print(f"\n[green]Import completed. Logs saved to {log_file_path}[/green]")

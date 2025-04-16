@@ -161,12 +161,12 @@ def PromptImportFile(custom_title=None):
     return import_file_path
 
 
-# A prompt that lets the user select one or more options from a list of player duplicates
+# A prompt that lets the user select one or more options from a list of player versions
 def PromptPlayerVersions(versions):
     """
-    Prompt the user to select one or more options from a list of player duplicates.
+    Prompt the user to select one or more options from a list of player versions.
 
-    :param duplicates: List of duplicate players.
+    :param versions: List of versions players.
     :return: List of selected players.
     """
     questions = [
@@ -174,12 +174,13 @@ def PromptPlayerVersions(versions):
             "type": "checkbox",
             "name": "selected_versions",
             "message": "Select which versions of this player to use:",
-            "choices": [{"name": "Skip version selections", "value": "skip"}]
-            + [{"name": player, "value": versions[player]} for player in versions],
+            "choices": [
+                {"name": player, "value": versions[player]} for player in versions
+            ],
         }
     ]
 
-    # Prompt the user for the selected duplicates
+    # Prompt the user for the selected versions
     answers = prompt(questions)
     selected_versions = answers.get("selected_versions", [])
 
@@ -231,8 +232,18 @@ def PromptExportPlayerSelection():
             "name": "specify_players_choice",
             "message": "Do you want to use the player names in an existing import file to specify which players to export?",
             "choices": [
-                {"name": "Yes", "value": True},
-                {"name": "No", "value": False},
+                {
+                    "name": "Yes, but I want to select all player versions",
+                    "value": "all_versions",
+                },
+                {
+                    "name": "Yes, but I want to select specific player versions",
+                    "value": "specific_versions",
+                },
+                {
+                    "name": "No, but export all players from the player list",
+                    "value": "full_list",
+                },
             ],
         }
     ]

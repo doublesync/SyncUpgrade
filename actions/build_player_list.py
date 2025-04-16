@@ -4,6 +4,8 @@ from dribble.memory import BuildPlayer
 from rich.console import Console
 from rich.progress import Progress
 
+from collections import defaultdict
+
 # Initialize the console for rich text output
 console = Console()
 
@@ -25,7 +27,7 @@ class BuildPlayerList(object):
         self.player_list_size = player_list_size
         self.player_list = []
         self.player_dump = {}
-        self.duplicates = {}
+        self.versions = {}
 
     def run(
         self,
@@ -35,13 +37,11 @@ class BuildPlayerList(object):
         only_include_addresses=None,
     ):
         # Print initial loading message
-        console.print("\n[cyan]Compiling player list...[/cyan]", justify="center")
-        console.print(
-            "[yellow]This may take a few seconds...[/yellow]\n", justify="center"
-        )
+        console.print("\n[yellow]Accessing player list...[/yellow]", justify="center")
 
-        player_list = []  # Initialize player list
-        player_dump = {}  # Initialize player dump
+        # Initialize list & dump variables
+        player_list = []
+        player_dump = {}
 
         # If we don't already have an initialized player list & dump, we need to create them
         if not self.player_list and not self.player_dump:
@@ -57,27 +57,44 @@ class BuildPlayerList(object):
                 player_list = []
                 player_dump = {}
 
+                # Initialize dictionary to count player names
+                name_counts = defaultdict(int)
+
+                # Iterate through the player list size, create player objects, and add them to the player list & dump
                 for i in range(player_list_start, self.player_list_size):
                     player = BuildPlayer(self.game, i)
 
                     # Update progress bar
                     progress.update(task, advance=1)
 
+                    # Check if the player is valid
                     if player is not None:
+                        # Check if the player is a duplicate
                         full_name = f"{player.vitals['First Name']} {player.vitals['Last Name']}"
-                        player_list.append(player)  # Store player object
-                        player_dump[full_name] = {
+                        name_counts[full_name] += 1  # Increment the count for this name
+
+                        # Add suffix if not the first instance
+                        if name_counts[full_name] > 1:
+                            unique_name = f"{full_name} ({name_counts[full_name]})"
+                        else:
+                            unique_name = full_name
+
+                        # Store the player object in the player list
+                        player_list.append(player)
+
+                        # Add the player data to the player dump
+                        player_dump[unique_name] = {
                             "Address": player.address,
+                            "Attributes": player.attributes,
+                            "Vitals": player.vitals,
+                            "Badges": player.badges,
+                            "Tendencies": player.tendencies,
+                            "Signatures": player.signatures,
+                            "Gear": player.gear,
+                            "Accessories": player.accessories,
+                            "Hotzones": player.hotzones,
+                            "Team": player.team,
                         }
-                        player_dump[full_name]["Attributes"] = player.attributes
-                        player_dump[full_name]["Vitals"] = player.vitals
-                        player_dump[full_name]["Badges"] = player.badges
-                        player_dump[full_name]["Tendencies"] = player.tendencies
-                        player_dump[full_name]["Signatures"] = player.signatures
-                        player_dump[full_name]["Gear"] = player.gear
-                        player_dump[full_name]["Accessories"] = player.accessories
-                        player_dump[full_name]["Hotzones"] = player.hotzones
-                        player_dump[full_name]["Team"] = player.team
                     else:
                         pass  # Skip if player is None
         else:
@@ -106,11 +123,12 @@ class BuildPlayerList(object):
             # Check if the user wants to export specific selections
             if export_selections:
                 filtered_dump = {}
+                always_include = ["Team"]
 
                 # Iterate through the player dump and filter based on user selections
                 for player, data in player_dump.items():
                     for category, items in data.items():
-                        if category in export_selections:
+                        if category in export_selections or category in always_include:
                             selected_keys = export_selections[category]
                             matching_items = {}
 
@@ -139,13 +157,13 @@ class BuildPlayerList(object):
         self.player_dump = player_dump
         return player_list
 
-    def find_duplicates(self):
-        if self.duplicates:  # If duplicates already found, return them
-            return self.duplicates
+    def find_versions(self):
+        if self.versions:  # If versions already found, return them
+            return self.versions
 
         if self.player_list:
             seen = set()  # Sets have faster lookups than Lists
-            duplicates = {}
+            versions = {}
 
             for player in self.player_list:
                 player_name = (
@@ -155,21 +173,21 @@ class BuildPlayerList(object):
                 player_address = hex(player.address).upper()
 
                 if player_name in seen:
-                    # Ensure duplicates entry exists
-                    duplicate_entry = duplicates.setdefault(player_name, {})
-                    duplicate_entry[f"{player_name} on {player_team_key}"] = (
+                    # Ensure versions entry exists
+                    version_entry = versions.setdefault(player_name, {})
+                    version_entry[f"{player_name} on {player_team_key}"] = (
                         player_address
                     )
                 else:
-                    # Store the first occurrence in duplicates
+                    # Store the first occurrence in versions
                     seen.add(player_name)
-                    duplicates[player_name] = {
+                    versions[player_name] = {
                         f"{player_name} on {player_team_key}": player_address
                     }
 
-            # Store and return duplicates
-            self.duplicates = duplicates
-            return duplicates
+            # Store and return versions
+            self.versions = versions
+            return versions
 
     def find_player_by_name(self, name):
         if self.player_list:
@@ -178,7 +196,7 @@ class BuildPlayerList(object):
                     f"{player.vitals['First Name']} {player.vitals['Last Name']}"
                 )
                 if full_name.lower() == name.lower():
-                    # Find the duplicates for the player (will include the first occurrence)
-                    player_duplicates = self.duplicates.get(full_name, {})
-                    return player, player_duplicates
+                    # Find the versions for the player (will include the first occurrence)
+                    player_versions = self.versions.get(full_name, {})
+                    return player, player_versions
             return None, None
