@@ -1,6 +1,6 @@
 import os
 
-import pymem
+from pymem.exception import ProcessNotFound, MemoryReadError
 from dribble.memory import GetOffsets
 from dribble.models import Game
 from rich import print
@@ -36,7 +36,11 @@ def StartProgram():
         console.print(header)
 
         # Initialize offsets
-        GetOffsets("resources/offsets.json")
+        try:
+            GetOffsets("resources/offsets.json")
+        except ValueError as e:
+            print(f"\n[red]Failed to load offsets: {e}[/red]\n")
+            return
 
         # Ask how many players to show
         player_list_size = PromptPlayerListSize()
@@ -55,14 +59,15 @@ def StartProgram():
         while True:
             run_cli(game, exporter)
 
-    except pymem.exception.ProcessNotFound:
+    except ProcessNotFound:
         print("\n[red]Could not find the process.[/red]\n")
-    except pymem.exception.MemoryReadError:
+    except MemoryReadError:
         print("\n[red]Could not read memory.[/red]\n")
     except KeyboardInterrupt:
         print("\n[cyan]Sync2K terminated by user.[/cyan]\n")
     except Exception as e:
         print(f"\n[red]An unexpected error occurred: {e}[/red]\n")
+        raise
     finally:
         input("\nPress Enter to exit...\n")
 
