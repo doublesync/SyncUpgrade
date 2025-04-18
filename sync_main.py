@@ -1,14 +1,14 @@
 import os
 
-from pymem.exception import ProcessNotFound, MemoryReadError
 from dribble.memory import GetOffsets
 from dribble.models import Game
+from pymem.exception import MemoryReadError, ProcessNotFound
 from rich import print
 from rich.console import Console
 from rich.panel import Panel
 
 from actions.build_player_list import BuildPlayerList
-from ui import run_cli, PromptPlayerListSize
+from ui import PromptPlayerListSize, run_cli
 
 # Setup rich console
 console = Console()
