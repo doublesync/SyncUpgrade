@@ -175,3 +175,6 @@ cython_debug/
 
 # Custom file directory for build artifacts
 output/
+.vscode/
+configs/exports/*.json
+configs/logs/*.json

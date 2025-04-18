@@ -810,7 +810,7 @@
             "length": 7
         },
         {
-            "name": "Spin Jumper",
+            "name": "Spin Jumper Tendency",
             "offset": "0x3ED",
             "startBit": 6,
             "length": 7
@@ -1134,7 +1134,7 @@
             "length": 7
         },
         {
-            "name": "Post Hop Shot",
+            "name": "Post Hop Shot Tendency",
             "offset": "0x41C",
             "startBit": 0,
             "length": 7

@@ -85,15 +85,15 @@ class BuildPlayerList(object):
                         # Add the player data to the player dump
                         player_dump[unique_name] = {
                             "Address": player.address,
-                            "Attributes": player.attributes,
+                            "Team": player.team,
                             "Vitals": player.vitals,
+                            "Attributes": player.attributes,
                             "Badges": player.badges,
                             "Tendencies": player.tendencies,
-                            "Signatures": player.signatures,
-                            "Gear": player.gear,
-                            "Accessories": player.accessories,
                             "Hotzones": player.hotzones,
-                            "Team": player.team,
+                            "Signatures": player.signatures,
+                            "Accessories": player.accessories,
+                            "Gear": player.gear,
                         }
                     else:
                         pass  # Skip if player is None
@@ -108,7 +108,7 @@ class BuildPlayerList(object):
                     if player.address in only_include_addresses
                 ]
             )
-            player_dump = (  # TODO: Looks like specific player exporting is working, however the versions are overwriting each other
+            player_dump = (  # TODO: Fix duplicate versions overwriting issue
                 self.player_dump
                 if not only_include_addresses
                 else {
@@ -125,11 +125,11 @@ class BuildPlayerList(object):
                 filtered_dump = {}
                 always_include = ["Team"]
 
-                # Iterate through the player dump and filter based on user selections
+                # Filter based on user selections
                 for player, data in player_dump.items():
                     for category, items in data.items():
                         if category in export_selections or category in always_include:
-                            selected_keys = export_selections[category]
+                            selected_keys = export_selections.get(category, [])
                             matching_items = {}
 
                             # Filter the items based on user selections
@@ -137,12 +137,17 @@ class BuildPlayerList(object):
                                 if item in selected_keys:
                                     matching_items[item] = value
 
-                            # If there are matching items, add them to the filtered dump
+                            # Add matching items to the filtered dump
                             if matching_items:
                                 filtered_dump[player] = filtered_dump.get(player, {})
                                 filtered_dump[player][category] = matching_items
 
                 player_dump = filtered_dump
+
+            # Remove the "Address" key from player_dump
+            for player, data in player_dump.items():
+                if "Address" in data:
+                    del data["Address"]
 
             # Export player_dump to a JSON file
             export_name = input(
@@ -151,6 +156,7 @@ class BuildPlayerList(object):
             export_dir = "configs/exports"
             with open(f"{export_dir}/{export_name}.json", "w") as f:
                 json.dump(player_dump, f, indent=4)
+                f.close()
 
         # Return the player list & store it in the class instance
         self.player_list = player_list
