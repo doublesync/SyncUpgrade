@@ -288,3 +288,29 @@ def PromptSpecificExportPlayers(import_file_path):
     selected_players = answers.get("selected_players", [])
 
     return selected_players
+
+
+# A prompt that lets the user select if they want to use all versions of players
+def PromptImportAllVersions():
+    """
+    Prompt the user to select if they want to use all versions of players.
+
+    :return: True if the user wants to use all versions, False otherwise.
+    """
+    questions = [
+        {
+            "type": "list",
+            "name": "import_all_versions",
+            "message": "Do you want to import all versions of players?",
+            "choices": [
+                {"name": "Yes", "value": True},
+                {"name": "No", "value": False},
+            ],
+        }
+    ]
+
+    # Prompt the user for the export all versions choice
+    answers = prompt(questions)
+    import_all_versions = answers.get("import_all_versions", False)
+
+    return import_all_versions

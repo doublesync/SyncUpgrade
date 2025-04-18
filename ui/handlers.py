@@ -3,8 +3,8 @@ import os
 
 from rich import print
 
-from actions.load_import_file import LoadImportFile
 from actions.import_sync_file import ImportSyncFile
+from actions.load_import_file import LoadImportFile
 from ui.prompts import (
     PromptExportPlayerSelection,
     PromptImportFile,

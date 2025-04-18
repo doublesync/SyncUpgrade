@@ -37,30 +37,39 @@ class ImportSyncFile(object):
         :return: None
         """
         # Locally import the PromptPlayerVersions function
-        from ui import PromptPlayerVersions
+        from ui import PromptImportAllVersions, PromptPlayerVersions
 
         # Initialize lists to store players found and not found
         logs = []
         players_not_found = []
 
+        # If there are multiple versions, prompt the user to select all or a specific one
+        import_all_versions = PromptImportAllVersions()
+
         # Iterate through the players in the JSON file
         for name, data in self.json_file.items():
             # Check if the player is in the player list
             self.exporter.find_versions()
-            _, versions = self.exporter.find_player_by_name(name)
+            first_version, versions = self.exporter.find_player_by_name(name)
             selected_players = []
             selected_player_objects = []
 
             # Prompt user to select which versions(s) to use
-            if versions:
-                # Get the actual player objects from the selected players {key: team_name, value: player_address}
-                selected_players = PromptPlayerVersions(versions)
-                # Iteraete through the selected players and add them to the selected_player_objects list
+            if versions and len(versions) > 1:
+                if import_all_versions:
+                    selected_players = [versions[version] for version in versions]
+                else:
+                    selected_players = PromptPlayerVersions(versions)
+
+                # Compile the selected players into a list of player objects
                 for player_address in selected_players:
                     player_address = int(player_address, 16)
                     player = BuildPlayer(self.game, None, player_address)
                     if player:
                         selected_player_objects.append(player)
+            else:
+                # Only the first version is available, so add it to the list
+                selected_player_objects.append(first_version)
 
             # Iterate through the selected players
             for player in selected_player_objects:

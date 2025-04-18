@@ -1,3 +1,4 @@
+import json
 import random
 import unittest
 
@@ -9,7 +10,7 @@ from dribble.memory import (
     written_in_bytes,
     written_in_integers,
 )
-from dribble.models import Game, conversion_list
+from dribble.models import Game, GetCodeFromString, conversion_list
 from dribble.utils import ConvertToGameValue
 
 from actions import BuildPlayerList
@@ -254,6 +255,77 @@ class TestSyncMainWorkflow(unittest.TestCase):
 
                     except Exception as e:
                         self.fail(f"{item} failed: {e}")
+                        raise
+
+    def test_08_confirm_player_data_by_import_file(self):
+        """
+        Test if the player data matches the import file.
+        """
+        offsets = GetOffsets("resources/offsets.json")
+        game = Game()
+        self.assertTrue(game.module)
+
+        player_list_size = 100
+        exporter = BuildPlayerList(game, player_list_size)
+        self.assertTrue(hasattr(exporter, "run"))
+
+        exporter.run()
+        import_file_path = open("configs/imports/export.json", "r", encoding="utf-8")
+        import_file_data = json.load(import_file_path)
+        import_file_path.close()
+
+        for name, data in import_file_data.items():
+            # Check if the player exists in the player list
+            player, versions = exporter.find_player_by_name(name)
+            if player is None:
+                continue
+
+            # Check if the player data matches the import file
+            for category, items in data.items():
+                if category not in offsets:
+                    continue
+                for item, value in items.items():
+                    try:
+                        # Convert the value to integer format if it's a string
+                        if value is str and item in conversion_list:
+                            find_value = GetCodeFromString(value)
+                            if find_value:
+                                value = find_value
+
+                        offset_data = None
+                        for offset in offsets[category]:
+                            if offset["name"] == item:
+                                offset_data = offset
+                                break
+                        item_name = offset_data["name"]
+                        offset = offset_data["offset"]
+                        length = offset_data["length"]
+                        start_bit = offset_data.get("startBit", 0)
+
+                        in_game_value = ReadInteger(
+                            game=game,
+                            address=player.address + offset,
+                            length=length,
+                            start_bit=start_bit,
+                            use_start_bit=(
+                                True if category in written_in_integers else False
+                            ),
+                            return_readable=(
+                                True if category in written_in_bytes else False
+                            ),
+                        )
+
+                        if in_game_value != value:
+                            self.fail(
+                                f"""
+                                {item_name}:
+                                Expected {value},
+                                got {in_game_value}
+                                """
+                            )
+
+                    except Exception as e:
+                        self.fail(f"{item} for {name} failed: {e}")
                         raise
 
 
