@@ -5,6 +5,7 @@
         "Player Base Address": "0x081F8798",
         "Player Offset Chain": [[96, true], [-3288, false]],
         "Player Offset Length": "0x448",
+        "Offset Appearance Data": "0x78",
         "Offset First Name": "0x28",
         "Offset Last Name": "0x0",
         "Offset Face ID": "0x100",
@@ -14,6 +15,23 @@
         "Offset Player Team Year": "0x161A",
         "Offset Player Team Type": "0x12F7"
     },
+    "Body": [
+        {
+            "name": "Height",
+            "offset": "0x2",
+            "length": 16
+        },
+        {
+            "name": "Wingspan",
+            "offset": "0x0",
+            "length": 16
+        },
+        {
+            "name": "Weight",
+            "offset": "0xF8",
+            "length": 16
+        }
+    ],
     "Vitals": [
         {
             "name": "Face ID",
