@@ -230,18 +230,18 @@ def PromptExportPlayerSelection():
         {
             "type": "list",
             "name": "specify_players_choice",
-            "message": "Do you want to use the player names in an existing import file to specify which players to export?",
+            "message": "Do you want to use the player names in an existing import file to specify players to export?",
             "choices": [
                 {
-                    "name": "Yes, but I want to select all player versions",
+                    "name": "Yes, select all player versions",
                     "value": "all_versions",
                 },
                 {
-                    "name": "Yes, but I want to select specific player versions",
+                    "name": "Yes, select specific player versions",
                     "value": "specific_versions",
                 },
                 {
-                    "name": "No, but export all players from the player list",
+                    "name": "No, export all players from the player list",
                     "value": "full_list",
                 },
             ],

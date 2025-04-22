@@ -59,8 +59,6 @@ def handle_choice(game, exporter, choice, **kwargs):
             export_selections = None
             use_preset, preset_file = PromptPresetUsage()
 
-            # If the user wants to use a preset, load the preset file
-            # If not, prompt the user to create new export options
             if not use_preset:
                 export_selections = PromptItemOptions()
                 PromptPresetCreation(export_selections)
@@ -75,17 +73,16 @@ def handle_choice(game, exporter, choice, **kwargs):
             # Check if the user wants to use the keys of an existing import file to specify which players to export
             specify_players_choice = PromptExportPlayerSelection()
             if specify_players_choice:
-                # If the user wants to specify players, prompt them for the import file path and if they want to select specific player versions
                 only_export_selected = True
-                import_file_path = None  # Will initialize under specific_versions and all_versions cases
-                selected_player_names = None  # Will initialize under specific_versions and all_versions cases
+                import_file_path = None
+                selected_player_names = None
                 selected_player_addresses = []
 
                 # Run the exporter first to initialize the player list & find versions
                 exporter.run()
                 exporter.find_versions()
 
-                # Check if the user wants to select specific player versions, all versions, or all players from the player list
+                # Check the user's decision on how to specify players
                 match specify_players_choice:
                     case "specific_versions":
                         # Prompt the user for the import file path and the specific player versions to export
@@ -93,13 +90,11 @@ def handle_choice(game, exporter, choice, **kwargs):
                         selected_player_names = PromptSpecificExportPlayers(
                             import_file_path
                         )
+
                         # Prompt the user to select which versions of each player to export
                         for player_name in selected_player_names:
-                            # Find the player and all of its versions by name
                             player, versions = exporter.find_player_by_name(player_name)
-                            # If the player is found, prompt the user to select which versions of it to export
                             if player:
-                                # Prompt and add the selected player versions to the list of selected players
                                 selected_versions = PromptPlayerVersions(versions)
                                 selected_player_addresses.extend(selected_versions)
 
@@ -109,17 +104,21 @@ def handle_choice(game, exporter, choice, **kwargs):
                         selected_player_names = PromptSpecificExportPlayers(
                             import_file_path
                         )
+
                         # If the user wants to export all versions of the players, add all of them to the list
                         for player_name in selected_player_names:
-                            player, versions = exporter.find_player_by_name(player_name)
-                            if player:
-                                selected_player_addresses.extend(versions)
+                            _, versions = exporter.find_player_by_name(player_name)
+                            if versions:
+                                selected_player_addresses.extend(
+                                    list(versions.values())
+                                )
 
                     case "full_list":
                         # If the user wants to export all players from the player list, set the flag to false
                         only_export_selected = False
 
-                # Convert selected_player_addresses from hexadecimal to integer
+                # Convert selected_player_addresses from hexadec
+                # imal to integer
                 for i in range(len(selected_player_addresses)):
                     try:
                         selected_player_addresses[i] = int(
