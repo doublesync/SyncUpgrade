@@ -1,10 +1,9 @@
 import json
+from collections import defaultdict
 
 from dribble.memory import BuildPlayer
 from rich.console import Console
 from rich.progress import Progress
-
-from collections import defaultdict
 
 # Initialize the console for rich text output
 console = Console()
@@ -108,7 +107,7 @@ class BuildPlayerList(object):
                     if player.address in only_include_addresses
                 ]
             )
-            player_dump = (  # TODO: Fix duplicate versions overwriting issue
+            player_dump = (
                 self.player_dump
                 if not only_include_addresses
                 else {
@@ -122,13 +121,15 @@ class BuildPlayerList(object):
         if export:
             # Check if the user wants to export specific selections
             if export_selections:
-                filtered_dump = {}
-                always_include = ["Team"]
+                filtered_dump = {
+                    player: {"Team": data["Team"]}
+                    for player, data in player_dump.items()
+                }
 
                 # Filter based on user selections
                 for player, data in player_dump.items():
                     for category, items in data.items():
-                        if category in export_selections or category in always_include:
+                        if category in export_selections:
                             selected_keys = export_selections.get(category, [])
                             matching_items = {}
 
@@ -146,6 +147,7 @@ class BuildPlayerList(object):
 
             # Remove the "Address" key from player_dump
             for player, data in player_dump.items():
+                # Remove address from the player data
                 if "Address" in data:
                     del data["Address"]
 
