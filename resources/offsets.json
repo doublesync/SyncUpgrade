@@ -2,10 +2,11 @@
     "Base": {
         "Team Base Address": "0x0",
         "Team Offset Length": "0x1620",
-        "Player Base Address": "0x081F8798",
-        "Player Offset Chain": [[96, true], [-3288, false]],
+        "Player Base Address": "0x07E5DD88",
+        "Player Offset Chain": [],
         "Player Offset Length": "0x448",
         "Offset Appearance Data": "0x78",
+        "Offset Face Data": "0x70",
         "Offset First Name": "0x28",
         "Offset Last Name": "0x0",
         "Offset Face ID": "0x100",
@@ -17,19 +18,118 @@
     },
     "Body": [
         {
-            "name": "Height",
-            "offset": "0x2",
-            "length": 16
+            "name": "Hair",
+            "offset": "0x24",
+            "startBit": 1,
+            "length": 7,
+            "derefAddress": "0x78"
         },
         {
-            "name": "Wingspan",
+            "name": "Facial Hair",
+            "offset": "0x25",
+            "startBit": 1,
+            "length": 7,
+            "derefAddress": "0x78"
+        },
+        {
+            "name": "Skin",
+            "offset": "0x23",
+            "startBit": 4,
+            "length": 5,
+            "derefAddress": "0x78"
+        },
+        {
+            "name": "Body Type",
+            "offset": "0x22",
+            "startBit": 2,
+            "length": 5,
+            "derefAddress": "0x78"
+        }
+    ],
+    "Face": [
+        {
+            "name": "Face",
             "offset": "0x0",
-            "length": 16
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
         },
         {
-            "name": "Weight",
-            "offset": "0xF8",
-            "length": 16
+            "name": "Skull",
+            "offset": "0x1",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Ears",
+            "offset": "0x4",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Brow",
+            "offset": "0x9",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Eyes",
+            "offset": "0xE",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Nose",
+            "offset": "0x15",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Cheeks",
+            "offset": "0x1C",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Mouth",
+            "offset": "0x1F",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Chin",
+            "offset": "0x26",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Lower Teeth",
+            "offset": "0x2C",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Upper Teeth",
+            "offset": "0x31",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
+        },
+        {
+            "name": "Eyebrows",
+            "offset": "0x38",
+            "derefAddress": "0x70",
+            "startBit": 0,
+            "length": 8
         }
     ],
     "Vitals": [
@@ -126,12 +226,12 @@
             "length": 8
         },
         {
-            "name": "Midrange Shot",
+            "name": "Mid-Range Shot",
             "offset": "0x398",
             "length": 8
         },
         {
-            "name": "3pt Shot",
+            "name": "Three-Point Shot",
             "offset": "0x399",
             "length": 8
         },
@@ -151,7 +251,7 @@
             "length": 8
         },
         {
-            "name": "Pass Accuracy",
+            "name": "Passing Accuracy",
             "offset": "0x39D",
             "length": 8
         },
@@ -281,6 +381,16 @@
             "length": 8
         },
         {
+            "name": "Back Durability",
+            "offset": "0x3B6",
+            "length": 8
+        },
+        {
+            "name": "Neck Durability",
+            "offset": "0x3B5",
+            "length": 8
+        },
+        {
             "name": "Left Shoulder Durability",
             "offset": "0x3B5",
             "length": 8
@@ -351,7 +461,7 @@
             "length": 8
         },
         {
-            "name": "Miscanellous Durability",
+            "name": "Misc Durability",
             "offset": "0x3C3",
             "length": 8
         }
@@ -596,96 +706,6 @@
             "offset": "0x435",
             "startBit": 4,
             "length": 3
-        },
-        {
-            "name": "Reserved",
-            "offset": "0x42A",
-            "startBit": 6,
-            "length": 1
-        },
-        {
-            "name": "Friendly",
-            "offset": "0x42A",
-            "startBit": 7,
-            "length": 1
-        },
-        {
-            "name": "Team Player",
-            "offset": "0x42B",
-            "startBit": 0,
-            "length": 1
-        },
-        {
-            "name": "Extremely Confident",
-            "offset": "0x42B",
-            "startBit": 1,
-            "length": 1
-        },
-        {
-            "name": "Keep It Real",
-            "offset": "0x42B",
-            "startBit": 2,
-            "length": 1
-        },
-        {
-            "name": "Pat My Back",
-            "offset": "0x42B",
-            "startBit": 3,
-            "length": 1
-        },
-        {
-            "name": "Expressive",
-            "offset": "0x42B",
-            "startBit": 4,
-            "length": 1
-        },
-        {
-            "name": "Unpredictable",
-            "offset": "0x42B",
-            "startBit": 5,
-            "length": 1
-        },
-        {
-            "name": "Laid Back",
-            "offset": "0x42B",
-            "startBit": 6,
-            "length": 1
-        },
-        {
-            "name": "Media Ringmaster",
-            "offset": "0x42B",
-            "startBit": 7,
-            "length": 1
-        },
-        {
-            "name": "Warm Weather Fan",
-            "offset": "0x42C",
-            "startBit": 0,
-            "length": 1
-        },
-        {
-            "name": "Finance Savvy",
-            "offset": "0x42C",
-            "startBit": 1,
-            "length": 1
-        },
-        {
-            "name": "Alpha Dog",
-            "offset": "0x42C",
-            "startBit": 2,
-            "length": 1
-        },
-        {
-            "name": "Enforcer",
-            "offset": "0x42C",
-            "startBit": 3,
-            "length": 1
-        },
-        {
-            "name": "Work Ethic",
-            "offset": "0x42C",
-            "startBit": 4,
-            "length": 3
         }
     ],
     "Tendencies": [
@@ -732,54 +752,6 @@
             "length": 7
         },
         {
-            "name": "Shot Close Left",
-            "offset": "0x3D6",
-            "startBit": 5,
-            "length": 7
-        },
-        {
-            "name": "Shot Close Middle",
-            "offset": "0x3D8",
-            "startBit": 0,
-            "length": 7
-        },
-        {
-            "name": "Shot Close Right",
-            "offset": "0x3D8",
-            "startBit": 7,
-            "length": 7
-        },
-        {
-            "name": "Shot Mid Center",
-            "offset": "0x3DE",
-            "startBit": 5,
-            "length": 7
-        },
-        {
-            "name": "Shot Mid Left",
-            "offset": "0x3DC",
-            "startBit": 7,
-            "length": 7
-        },
-        {
-            "name": "Shot Mid Left Center",
-            "offset": "0x3DD",
-            "startBit": 6,
-            "length": 7
-        },
-        {
-            "name": "Shot Mid Right",
-            "offset": "0x3E0",
-            "startBit": 7,
-            "length": 7
-        },
-        {
-            "name": "Shot Mid Right Center",
-            "offset": "0x3E0",
-            "startBit": 0,
-            "length": 7
-        },
-        {
             "name": "Shot Mid",
             "offset": "0x3D9",
             "startBit": 6,
@@ -792,43 +764,13 @@
             "length": 7
         },
         {
-            "name": "Shot 3pt Center",
-            "offset": "0x3E6",
-            "startBit": 5,
-            "length": 7
-        },
-        {
-            "name": "Shot 3pt Left",
-            "offset": "0x3E4",
-            "startBit": 7,
-            "length": 7
-        },
-        {
-            "name": "Shot 3pt Left Center",
-            "offset": "0x3E5",
-            "startBit": 6,
-            "length": 7
-        },
-        {
-            "name": "Shot 3pt Right",
-            "offset": "0x3E8",
-            "startBit": 7,
-            "length": 7
-        },
-        {
-            "name": "Shot 3pt Right Center",
-            "offset": "0x3E8",
-            "startBit": 0,
-            "length": 7
-        },
-        {
             "name": "Shot Under Basket",
             "offset": "0x3D4",
             "startBit": 7,
             "length": 7
         },
         {
-            "name": "Spin Jumper Tendency",
+            "name": "Spin Jumper",
             "offset": "0x3ED",
             "startBit": 6,
             "length": 7
@@ -900,13 +842,13 @@
             "length": 7
         },
         {
-            "name": "Alley-Oop",
+            "name": "Alley Oop",
             "offset": "0x3CC",
             "startBit": 7,
             "length": 7
         },
         {
-            "name": "Putback Dunk",
+            "name": "Putback",
             "offset": "0x3CD",
             "startBit": 6,
             "length": 7
@@ -1152,7 +1094,7 @@
             "length": 7
         },
         {
-            "name": "Post Hop Shot Tendency",
+            "name": "Post Hop Shot",
             "offset": "0x41C",
             "startBit": 0,
             "length": 7
@@ -1188,7 +1130,7 @@
             "length": 7
         },
         {
-            "name": "Shoot",
+            "name": "Shot",
             "offset": "0x3C8",
             "startBit": 0,
             "length": 7
@@ -1334,7 +1276,7 @@
             "length": 7
         },
         {
-            "name": "Spin Jumper",
+            "name": "Spin Jumper Animation",
             "offset": "0x1CA",
             "startBit": 4,
             "length": 6
@@ -1454,7 +1396,7 @@
             "length": 6
         },
         {
-            "name": "Post Hop Shot",
+            "name": "Post Hop Shot Animation",
             "offset": "0x391",
             "startBit": 3,
             "length": 4
@@ -1656,85 +1598,85 @@
     ],
     "Hotzones": [
         {
-            "name": "Under Basket",
+            "name": "Paint - Restricted Area",
             "offset": "0x1B8",
             "startBit": 0,
             "length": 2
         },
         {
-            "name": "Close Left",
+            "name": "Paint - Left Block",
+            "offset": "0x1BB",
+            "startBit": 2,
+            "length": 2
+        },
+        {
+            "name": "Paint - Free Throw Line",
             "offset": "0x1B8",
             "startBit": 2,
             "length": 2
         },
         {
-            "name": "Close Middle",
-            "offset": "0x1B8",
-            "startBit": 2,
-            "length": 2
-        },
-        {
-            "name": "Close Right",
+            "name": "Paint - Right Block",
             "offset": "0x1BB",
             "startBit": 4,
             "length": 2
         },
         {
-            "name": "Mid-Range Left",
+            "name": "Mid - Left Corner",
             "offset": "0x1C8",
             "startBit": 4,
             "length": 2
         },
         {
-            "name": "Mid-Range Left-Center",
+            "name": "Mid - Left Wing",
             "offset": "0x1B8",
             "startBit": 4,
             "length": 2
         },
         {
-            "name": "Mid-Range Center",
+            "name": "Mid - Top Arc",
             "offset": "0x1B8",
             "startBit": 6,
             "length": 2
         },
         {
-            "name": "Mid-Range Right-Center",
+            "name": "Mid - Right Wing",
             "offset": "0x2FA",
             "startBit": 3,
             "length": 2
         },
         {
-            "name": "Mid-Range Right",
+            "name": "Mid - Right Corner",
             "offset": "0x306",
             "startBit": 7,
             "length": 2
         },
         {
-            "name": "Three Left",
+            "name": "3PT - Left Corner",
             "offset": "0x1BE",
             "startBit": 6,
             "length": 2
         },
         {
-            "name": "Three Left-Center",
+            "name": "3PT - Left Wing",
             "offset": "0x1BF",
             "startBit": 6,
             "length": 2
         },
         {
-            "name": "Three Center",
+            "name": "3PT - Top Arc",
             "offset": "0x163",
             "startBit": 0,
             "length": 2
         },
         {
-            "name": "Three Right-Center",
+            "name": "3PT - Right Wing",
             "offset": "0x2E7",
             "startBit": 5,
             "length": 2
         },
         {
-            "name": "Three Right",
+            "name": "3PT - Right Corner",
             "offset": "0x1BB",
             "startBit": 0,
             "length": 2

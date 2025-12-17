@@ -7,11 +7,11 @@
   },
   {
    "optionDest": "filenames",
-   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/sync_main.py"
+   "value": "C:/Users/Development/Documents/VS Projects/Sync Projects/DribbleUpgrader/sync_main.py"
   },
   {
    "optionDest": "onefile",
-   "value": false
+   "value": true
   },
   {
    "optionDest": "console",
@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/sync_icon.ico"
+   "value": "C:/Users/Development/Documents/VS Projects/Sync Projects/DribbleUpgrader/sync_icon.ico"
   },
   {
    "optionDest": "clean_build",
@@ -55,15 +55,15 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/configs;."
+   "value": "C:/Users/Development/Documents/VS Projects/Sync Projects/DribbleUpgrader/configs;."
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/chris/Documents/Projects/SyncUpgrade/resources;."
+   "value": "C:/Users/Development/Documents/VS Projects/Sync Projects/DribbleUpgrader/resources;."
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/chris/AppData/Local/Programs/Python/Python313/python313.dll;."
+   "value": "C:\\Users\\Development\\AppData\\Local\\Programs\\Python\\Python314\\python314.dll;."
   },
   {
    "optionDest": "hiddenimports",

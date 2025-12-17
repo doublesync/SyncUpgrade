@@ -208,3 +208,5 @@ class BuildPlayerList(object):
                     player_versions = self.versions.get(full_name, {})
                     return player, player_versions
             return None, None
+        
+        return None, None

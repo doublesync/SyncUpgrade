@@ -1,5 +1,6 @@
 import os
 import json
+import requests
 
 
 # A class to load a (.csv, .json) file depending on the file extension and return the data in dictionary format.
@@ -20,23 +21,36 @@ class LoadImportFile:
             except json.JSONDecodeError as e:
                 raise ValueError(f"Error decoding JSON: {e}")
 
+    def load_file_from_api(self):
+        api_url = "https://drbl.live/players/api/export/"
+        try:
+            response = requests.get(api_url)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            raise ValueError(f"Error fetching data from API: {e}")
+
     def load_file(self):
         """Load the file and return the data in dictionary format."""
         if not self.file_path:
             raise ValueError("File path is empty.")
 
-        # Check if the file exists
-        if not os.path.isfile(self.file_path):
-            raise FileNotFoundError(f"File not found: {self.file_path}")
+        if self.file_path != "api":
+            # Check if the file exists
+            if not os.path.isfile(self.file_path):
+                raise FileNotFoundError(f"File not found: {self.file_path}")
 
-        # Get the file extension
-        _, self.file_type = os.path.splitext(self.file_path)
+            # Get the file extension
+            _, self.file_type = os.path.splitext(self.file_path)
 
-        # Check if the file type is valid
-        if self.file_type not in self.valid_file_types:
-            raise ValueError(f"Invalid file type: {self.file_type}.")
+            # Check if the file type is valid
+            if self.file_type not in self.valid_file_types:
+                raise ValueError(f"Invalid file type: {self.file_type}.")
 
-        if self.file_type == ".json":
-            self.data = self.load_json()
+            if self.file_type == ".json":
+                self.data = self.load_json()
+                
+        else:
+            self.data = self.load_file_from_api()
 
         return self.data

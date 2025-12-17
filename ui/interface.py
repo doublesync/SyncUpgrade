@@ -3,7 +3,9 @@ import sys
 from rich.console import Console
 from rich.prompt import Prompt
 
-from ui.handlers import handle_choice
+from actions.import_sync_file import ImportSyncFile
+from actions.load_import_file import LoadImportFile
+from ui.prompts import PromptImportFile
 
 console = Console()
 
@@ -11,20 +13,28 @@ console = Console()
 def run_cli(game, exporter):
     """Runs the Sync2K CLI interface."""
 
-    # Main menu choices
-    choices = {"1": "Import Players", "2": "Export Players", "q": "Quit"}
-
     while True:
-        console.print("\n[bold cyan]Choose a mode:[/bold cyan]")
-        for key, value in choices.items():
-            console.print(f"[bold yellow]{key})[/bold yellow] {value}")
+        """
+        Import player list data from a file.
+        """
+        import_file_path = PromptImportFile()
+        
+        if not import_file_path:
+            input("\nPress Enter to continue...")
+            return
 
-        choice = Prompt.ask(
-            "\n[bold green]Enter your choice[/bold green]", choices=list(choices.keys())
-        )
+        try:
+            # Load the import file and get the data
+            import_handler = LoadImportFile(import_file_path)
+            import_data = import_handler.load_file()
 
-        if choice == "q":
-            console.print("\n[cyan]Thanks for using Sync2K![/cyan]\n")
-            sys.exit()
+            # Run the exporter to initialize the player list, then run the importer with the loaded data
+            exporter.run()
 
-        handle_choice(game, exporter, choice)
+            # Run the importer with the loaded data
+            importer = ImportSyncFile(game, exporter, import_data)
+            importer.run()
+
+        except Exception as e:
+            line_no = getattr(e, "__traceback__", None).tb_lineno if getattr(e, "__traceback__", None) else "unknown"
+            print(f"\n[red]Error importing file at line @{line_no}: {e}.[/red]")

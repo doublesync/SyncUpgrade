@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.panel import Panel
 
 from actions.build_player_list import BuildPlayerList
-from ui import PromptPlayerListSize, run_cli
+from ui import run_cli
 
 # Setup rich console
 console = Console()
@@ -20,18 +20,14 @@ def ClearConsole():
 
 
 def StartProgram():
-    """Main logic to run Sync2K."""
+    """Main logic to run Dribble Upgrader."""
     try:
 
         # Title and donation panel
         header = Panel.fit(
-            "[bold magenta]Sync2K - NBA2K Automation Tool[/bold magenta]\n"
-            """
-            [green]Support development:[/green] \n
-            [link=https://ko-fi.com/doublesync]Donate[/link]
-            """,
-            title="Welcome",
-            border_style="cyan",
+            "[bold magenta]Welcome to our upgrade suite, please refer to the Discord server if you have any questions.[/bold magenta]\n\n",
+            title="Welcome to Dribble Upgrader!",
+            border_style="magenta",
         )
         console.print(header)
 
@@ -43,9 +39,9 @@ def StartProgram():
             return
 
         # Ask how many players to show
-        player_list_size = PromptPlayerListSize()
+        player_list_size = 10000
 
-        # # Initialize the game connection
+        # Initialize the game connection
         game = Game()
         exporter = BuildPlayerList(game, player_list_size)
         exporter.run()
@@ -64,7 +60,7 @@ def StartProgram():
     except MemoryReadError:
         print("\n[red]Could not read memory.[/red]\n")
     except KeyboardInterrupt:
-        print("\n[cyan]Sync2K terminated by user.[/cyan]\n")
+        print("\n[cyan]Upgrader has been terminated by user.[/cyan]\n")
     except Exception as e:
         print(f"\n[red]An unexpected error occurred: {e}[/red]\n")
         raise
