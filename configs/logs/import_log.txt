@@ -1,6 +1,4 @@
 Player not found: Jason Archer
 Player not found: Charles Martinez
-Invalid string representation for Spin Jumper Animation: Allen Iverson
 Player not found: David Morris
-Invalid string representation for Spin Jumper Animation: De'Aaron Fox
 Player not found: Jesus Wood
